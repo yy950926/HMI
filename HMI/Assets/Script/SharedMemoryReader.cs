@@ -20,11 +20,14 @@ public class SharedMemoryReader : MonoBehaviour
     private MemoryMappedViewAccessor accessor;
     private Mutex mutex;
 
-    public UnityEvent<float> OnSpeedChanged;
+    public UnityEvent<SharedMemoryReader> OnSpeedChanged;
 
     private bool isRunning = true;
 
     public SharedData Data { get; private set; }
+
+
+    public int currentSpeed;
 
     void Start()
     {
@@ -58,9 +61,9 @@ public class SharedMemoryReader : MonoBehaviour
                     IntPtr ptr = accessor.SafeMemoryMappedViewHandle.DangerousGetHandle();
                     // Marshal the data from the shared memory
                     Data = (SharedData)Marshal.PtrToStructure(ptr, typeof(SharedData));
-
-                    Debug.Log(Data.speed); // Or use the data as needed
-                    //OnSpeedChanged?.Invoke((float)Data.speed); // trigger speed changed event
+                    currentSpeed =  (int)Data.speed;
+                    //Debug.Log( currentSpeed ); 
+                    OnSpeedChanged?.Invoke(this); // trigger speed changed event
                 }
                 finally
                 {

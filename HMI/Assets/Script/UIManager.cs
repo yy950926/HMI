@@ -9,7 +9,9 @@ public class UIManager :  MonoBehaviour
 {
     public ClusterEventSO clusterEvent;
 
-    private ClusterSpeed EgoCarSpeed;
+    public ClusterSpeed EgoCarSpeed;
+
+    
     
     private void OnEnable() {
         clusterEvent.OnEventRaise += OnClusterEvent;
@@ -21,9 +23,7 @@ public class UIManager :  MonoBehaviour
 
     private void OnClusterEvent(SharedMemoryReader SharedMemoryReader)
     {
-        //var currentSpeed = SharedMemoryReader.Speed;
+        EgoCarSpeed.speed = SharedMemoryReader.currentSpeed;
         
-        
-        //Debug.Log(SharedMemoryReader.Speed);
     }
 }

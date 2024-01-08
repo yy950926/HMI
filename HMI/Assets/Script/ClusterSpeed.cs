@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 namespace HMI.UI{
 
@@ -13,12 +14,21 @@ public class ClusterSpeed : MonoBehaviour
 
     public float speed;
 
+
+    private void Start()
+    {
+            
+        Text = GetComponent<TextMeshPro>(); 
+            
+    }
+
+
     /// <summary>
     /// Update the textual speed
     /// </summary>
     void Update()
     {
-        
+        presentClusterSpeed();
     }
     
     /// <summary>
@@ -26,7 +36,7 @@ public class ClusterSpeed : MonoBehaviour
     /// </summary>
     private void presentClusterSpeed()
     {
-        
+        Text.text = speed.ToString("F1") + " km/h";
     }
 }
 

@@ -631,6 +631,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 397923937}
+  - component: {fileID: 397923938}
   m_Layer: 0
   m_Name: SideCarManager
   m_TagString: Untagged
@@ -653,6 +654,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &397923938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 397923936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d25cbbb50b18b429aa65d50b9f8212, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &406643968
 GameObject:
   m_ObjectHideFlags: 0
@@ -1020,7 +1033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ce2185fdc4fc584f93beae8f1f235ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Text: {fileID: 0}
+  Text: {fileID: 584180941}
   speed: 0
 --- !u!1 &586834556
 GameObject:
@@ -1931,6 +1944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clusterEvent: {fileID: 11400000, guid: b3251fce6d1ac264893a5c8ea41e95cf, type: 2}
+  EgoCarSpeed: {fileID: 584180943}
 --- !u!1001 &1452312544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2643,6 +2657,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  currentSpeed: 0
 --- !u!1 &2137941732
 GameObject:
   m_ObjectHideFlags: 0
