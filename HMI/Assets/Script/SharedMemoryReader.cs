@@ -5,15 +5,9 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
 using System.Runtime.InteropServices;
+using BasicClass;
 
 
-[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-public struct SharedData
-{
-    public double speed;
-    public double rpm;
-    
-}
 public class SharedMemoryReader : MonoBehaviour
 {
     private MemoryMappedFile sharedMemory;
@@ -23,10 +17,9 @@ public class SharedMemoryReader : MonoBehaviour
     public UnityEvent<SharedMemoryReader> OnSpeedChanged;
 
     private bool isRunning = true;
-
     public SharedData Data { get; private set; }
 
-
+    [HideInInspector]
     public int currentSpeed;
 
     void Start()
@@ -57,19 +50,25 @@ public class SharedMemoryReader : MonoBehaviour
             {
                 try
                 {
-                    // Create a handle for the shared memory
-                    IntPtr ptr = accessor.SafeMemoryMappedViewHandle.DangerousGetHandle();
-                    // Marshal the data from the shared memory
-                    Data = (SharedData)Marshal.PtrToStructure(ptr, typeof(SharedData));
-                    currentSpeed =  (int)Data.speed;
-                    //Debug.Log( currentSpeed ); 
-                    OnSpeedChanged?.Invoke(this); // trigger speed changed event
+                    byte[] buffer = new byte[Marshal.SizeOf(typeof(SharedData))];
+                    accessor.ReadArray(0, buffer, 0, buffer.Length);
+                    GCHandle handle = GCHandle.Alloc(buffer, GCHandleType.Pinned);
+                    Data = (SharedData)Marshal.PtrToStructure(handle.AddrOfPinnedObject(), typeof(SharedData));
+                    handle.Free();
+
+                    
+                    currentSpeed = (int)Data.speed;
+                    foreach (var coord in Data.car_coordinates)
+                    {
+                        Debug.Log($"Car Coordinate: X={coord.X}, Y={coord.Y}");
+                    }
+
+                    OnSpeedChanged?.Invoke(this); // 触发速度变化事件
                 }
                 finally
                 {
                     mutex.ReleaseMutex();
                 }
-
                 yield return new WaitForSeconds(0.1f);
             }
             else
